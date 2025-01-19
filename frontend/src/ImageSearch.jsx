@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from "react";
 
 function ImageSearch() {
+
+  // escape HTML special characters
+  function escapeHTML(str) {
+    return str.replace(/&/g, "&amp;")
+              .replace(/</g, "&lt;")
+              .replace(/>/g, "&gt;")
+              .replace(/"/g, "&quot;")
+              .replace(/'/g, "&#039;");
+  }
   const [query, setQuery] = useState("");
   const [allImages, setAllImages] = useState([]);
   const [filteredImages, setFilteredImages] = useState([]);
@@ -106,7 +115,7 @@ function ImageSearch() {
 
               <div style={{ padding: "10px", textAlign: "center" }}>
                 <p style={{ margin: "0", fontSize: "14px", color: "#555" }}>
-                  Tags: {image.tags.join(", ")}
+                  Tags: {image.tags.map(tag => escapeHTML(tag)).join(", ")}
                 </p>
               </div>
 
