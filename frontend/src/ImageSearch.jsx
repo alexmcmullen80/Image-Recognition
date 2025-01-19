@@ -8,18 +8,18 @@ function ImageSearch() {
   // S3 bucket URL for image metadata and images
   const S3_BUCKET_URL = "https://my-image-metadata-bucket.s3.amazonaws.com";
 
-  // Fetch image metadata from S3 bucket
+  // fetch image metadata from S3 bucket
   useEffect(() => {
     const fetchAllImages = async () => {
       try {
-        // Fetch metadata from S3 bucket URL
+        // fetch metadata from S3 bucket URL
         const response = await fetch(`${S3_BUCKET_URL}/image_metadata.json`);
         if (!response.ok) {
           throw new Error("Failed to fetch metadata");
         }
         const data = await response.json();
-        setAllImages(data || []); // Default to empty array if data is undefined
-        setFilteredImages(data || []); // Default to empty array if data is undefined
+        setAllImages(data || []); 
+        setFilteredImages(data || []); 
       } catch (error) {
         console.error("Error fetching images:", error);
         setAllImages([]);
@@ -30,10 +30,10 @@ function ImageSearch() {
     fetchAllImages();
   }, []);
 
-  // Filter images based on search query
+  // filter images based on search query
   const handleSearch = () => {
     if (query.trim() === "") {
-      setFilteredImages(allImages); // Show all images if query is empty
+      setFilteredImages(allImages); // show all images if query is empty
     } else {
       const lowerCaseQuery = query.toLowerCase();
       const filtered = allImages.filter((image) =>
@@ -95,8 +95,6 @@ function ImageSearch() {
             >
               <img
                  src={`${S3_BUCKET_URL}/images/${image.file_name}`} // Fetch image from S3 bucket
-                //src={`https://my-image-metadata-bucket.s3.amazonaws.com/images/${image.file_name}`}
-
                 alt={image.file_name}
                 style={{
                   width: "100%",
@@ -111,29 +109,7 @@ function ImageSearch() {
                   Tags: {image.tags.join(", ")}
                 </p>
               </div>
-              {/* <div style={{ padding: "10px", textAlign: "center" }}>
-                <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
-                  {image.tags.map((tag, index) => (
-                    <span
-                      key={index}
-                      style={{
-                        margin: "2px",
-                        padding: "5px 5px",
-                        backgroundColor: "#D0E8D6", // Turquoise background color
-                        color: "#3CB371", // White font color
-                        border: "2px solid #3CB371",
-                        borderRadius: "20px", // Rounded edges
-                        fontSize: "12px",
-                        fontWeight: "bold",
-                        textTransform: "capitalize", // Capitalizes the first letter of each word
-                        display: "inline-block", // Makes the tag appear as a box
-                      }}
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div> */}
+
 
             </div>
           ))
